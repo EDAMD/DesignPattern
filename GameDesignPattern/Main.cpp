@@ -2,6 +2,9 @@
 #include "Factory.h"
 #include "BuilderPattern.h"
 #include "Prototype.h"
+#include "Adapter.h"
+#include "Bridge.h"
+#include "Composite.h"
 
 int main()
 {
@@ -38,6 +41,41 @@ int main()
 
 	goblin1->ShowInfo();
 	goblin2->ShowInfo();
+
+	// 适配器 - 将旧设备的接口转换为新设备可以使用的
+	std::shared_ptr<OldInterface> oldObj = std::make_shared<OldInterface>();
+	std::shared_ptr<ITarget> adapter = std::make_shared<Adapter>(oldObj);
+
+	adapter->Request();
+
+	// 桥接模式
+	std::shared_ptr<Device> tv = std::make_shared<TV>();
+	std::shared_ptr<Device> radio = std::make_shared<Radio>();
+
+	RemoteControl Remote(tv);
+	Remote.TurnOff();
+	Remote.TurnOn();
+	Remote.VolumeUp();
+
+	AdvancedRemote advRemote(radio);
+	advRemote.TurnOn();
+	advRemote.Mute();
+	advRemote.TurnOff();
+
+
+	auto root = std::make_shared<SceneNode>("Root");
+	auto house = std::make_shared<SceneNode>("House");
+
+	auto lamp = std::make_shared<Light>("Lamp");
+	auto WallMesh = std::make_shared<Mesh>("WallMesh");
+	auto roofMesh = std::make_shared<Mesh>("RoofMesh");
+
+	root->Add(house);
+	house->Add(lamp);
+	house->Add(WallMesh);
+	house->Add(roofMesh);
+
+	root->ShowInfo();
 
 
 	return 0;

@@ -16,6 +16,11 @@
 * 1.日志记录系统(根据配置, 选择不同输出方式. 例如控制台/文件/网络)
 * 2.游戏实体创建(敌人类型, 关卡物体, 技能对象)
 * 3.跨平台资源加载(不同平台需要不同实现)
+* 
+* UE:
+* NewObject
+* StaticConstructObject
+* GetWorld()->SpawnActor()
 */
 
 class Product
