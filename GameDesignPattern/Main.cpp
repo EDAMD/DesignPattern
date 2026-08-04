@@ -6,6 +6,8 @@
 #include "Bridge.h"
 #include "Composite.h"
 #include "Decorator.h"
+#include "Flyweight.h"
+#include "Proxy.h"
 
 int main()
 {
@@ -86,6 +88,24 @@ int main()
 
 	std::shared_ptr<Character> IceWarrior = std::make_shared<IceEnchantment>(FireWarrior);
 	IceWarrior->Attack();
+
+	// 享元模式
+	TreeModelFactory Treefactory;
+	auto oakModel = Treefactory.GetTreeModel("OakMesh", "OakTexture");
+
+	Tree tree1 = { 10, 20, oakModel };
+	Tree tree2 = { 30, 40, oakModel };
+	Tree tree3 = { 50, 60, oakModel };
+
+	tree1.Render();
+	tree2.Render();
+	tree3.Render();
+
+
+	// 代理模式
+	ProxyImage image("HighRes_texture.png");
+	image.Display();
+	image.Display();
 
 	return 0;
 }
