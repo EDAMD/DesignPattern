@@ -5,6 +5,7 @@
 #include "Adapter.h"
 #include "Bridge.h"
 #include "Composite.h"
+#include "Decorator.h"
 
 int main()
 {
@@ -77,6 +78,14 @@ int main()
 
 	root->ShowInfo();
 
+	// ×°ÊÎÆ÷Ä£Ê½
+	std::shared_ptr<Character> warrior = std::make_shared<Warrior>();
+
+	std::shared_ptr<Character> FireWarrior = std::make_shared<FireEnchantment>(warrior);
+	FireWarrior->Attack();
+
+	std::shared_ptr<Character> IceWarrior = std::make_shared<IceEnchantment>(FireWarrior);
+	IceWarrior->Attack();
 
 	return 0;
 }
