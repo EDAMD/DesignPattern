@@ -21,7 +21,7 @@
 * 5.ÐéÄâ´úÀí
 * 
 * UE:
-* TSoftObjectPtr, TSoftClassPtr LoadSynchronous BTTask BTService RPC
+* TSoftObjectPtr, TSoftClassPtr LoadSynchronous BTTask BTService RPC FStreamableManager
 * 
 */
 
