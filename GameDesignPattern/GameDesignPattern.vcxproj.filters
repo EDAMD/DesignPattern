@@ -59,5 +59,14 @@
     <ClInclude Include="Flyweight.h">
       <Filter>头文件</Filter>
     </ClInclude>
+    <ClInclude Include="Proxy.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="ChainOfResponsibility.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="Command.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

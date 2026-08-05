@@ -8,6 +8,8 @@
 #include "Decorator.h"
 #include "Flyweight.h"
 #include "Proxy.h"
+#include "ChainOfResponsibility.h"
+#include "Command.h"
 
 int main()
 {
@@ -66,6 +68,7 @@ int main()
 	advRemote.TurnOff();
 
 
+	// 组合模式
 	auto root = std::make_shared<SceneNode>("Root");
 	auto house = std::make_shared<SceneNode>("House");
 
@@ -106,6 +109,39 @@ int main()
 	ProxyImage image("HighRes_texture.png");
 	image.Display();
 	image.Display();
+
+	
+	// 责任链模式
+	auto handlerA = std::make_shared<ConcreteHandlerA>();
+	auto handlerB = std::make_shared<ConcreteHandlerB>();
+
+	handlerA->SetNext(handlerB);
+
+	handlerA->HandleRequest("TypeA");
+	handlerA->HandleRequest("TypeB");
+	handlerA->HandleRequest("TypeC");
+
+
+	// 命令模式
+	LightElement livingRoomLight;
+	auto lightOn = std::make_shared<LightOnCommand>(livingRoomLight);
+	auto lightOff = std::make_shared<LightOffCommand>(livingRoomLight);
+
+	RemoteControlElement remote;
+
+	remote.SetCommand(lightOn);
+	remote.PressButtom();
+
+	remote.SetCommand(lightOff);
+	remote.PressButtom();
+
+	remote.PressUndo();
+
+
+
+
+
+
 
 	return 0;
 }
