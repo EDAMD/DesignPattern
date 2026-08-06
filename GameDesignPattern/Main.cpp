@@ -10,6 +10,7 @@
 #include "Proxy.h"
 #include "ChainOfResponsibility.h"
 #include "Command.h"
+#include "Interpreter.h"
 
 int main()
 {
@@ -138,9 +139,20 @@ int main()
 	remote.PressUndo();
 
 
+	// ½âÊÍÆ÷Ä£Ê½
+	std::shared_ptr<Expression> expression = std::make_shared<SubExpression>(
+		std::make_shared<AddExpression>(
+			std::make_shared<VariableExpression>("x"),
+			std::make_shared<ConstantExpression>(5)
+		),
+		std::make_shared<VariableExpression>("y")
+	);
 
+	std::map<std::string, int> context;
+	context["x"] = 10;
+	context["y"] = 3;
 
-
+	std::cout << "Result: " << expression->Interpret(context) << std::endl; 
 
 
 	return 0;

@@ -139,6 +139,7 @@
     <ClInclude Include="Facade.h" />
     <ClInclude Include="Factory.h" />
     <ClInclude Include="Flyweight.h" />
+    <ClInclude Include="Interpreter.h" />
     <ClInclude Include="Prototype.h" />
     <ClInclude Include="Proxy.h" />
     <ClInclude Include="Singleton.h" />
