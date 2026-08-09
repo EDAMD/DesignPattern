@@ -11,6 +11,8 @@
 #include "ChainOfResponsibility.h"
 #include "Command.h"
 #include "Interpreter.h"
+#include "Iterator.h"
+#include "Mediator.h"
 
 int main()
 {
@@ -154,6 +156,33 @@ int main()
 
 	std::cout << "Result: " << expression->Interpret(context) << std::endl; 
 
+
+	// 迭代器模式
+	ItemCollection collection;
+	collection.AddItem(10);
+	collection.AddItem(20);
+	collection.AddItem(30);
+
+	std::shared_ptr<IIterator<int>> it = collection.CreateIterator();
+
+	while (it->HasNext())
+	{
+		std::cout << it->Next() << std::endl;
+	}
+
+	// 中介者模式
+	GameMediator mediator;
+
+	Player p1("Alice", mediator);
+	Player p2("Bob", mediator);
+	Player p3("Charlie", mediator);
+
+	mediator.AddColleague(&p1);
+	mediator.AddColleague(&p2);
+	mediator.AddColleague(&p3);
+
+	p1.SendMessage("Hello everyone !");
+	p2.SendMessage("Hi Alice !");
 
 	return 0;
 }
