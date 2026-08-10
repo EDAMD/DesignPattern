@@ -54,7 +54,7 @@ public:
 
 	virtual int Interpret(std::map<std::string, int>& context) override
 	{
-		return value;
+		return value; 
 	}
 
 private:

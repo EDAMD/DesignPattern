@@ -13,6 +13,8 @@
 #include "Interpreter.h"
 #include "Iterator.h"
 #include "Mediator.h"
+#include "Memento.h"
+#include "Observer.h"
 
 int main()
 {
@@ -183,6 +185,60 @@ int main()
 
 	p1.SendMessage("Hello everyone !");
 	p2.SendMessage("Hi Alice !");
+
+
+	// 备忘录模式
+	TextEditor editor;
+	History history;
+
+	editor.SetText("Hello");
+	history.Push(editor.Save());
+
+	editor.SetText("Hello World");
+	history.Push(editor.Save());
+
+	editor.SetText("Hello Unreal");
+	std::cout << "Current: " << editor.GetText() << std::endl;
+
+	editor.Restore(history.Pop());
+	std::cout << "Undo 1: " << editor.GetText() << std::endl;
+
+	editor.Restore(history.Pop());
+	std::cout << "Undo 2: " << editor.GetText() << std::endl;
+
+	// 区别:
+	// 命令模式:		请求封装为对象, 可撤销/重做
+	// 备忘录模式:	保存并恢复对象状态, 不破坏封装
+
+	// 总结比较
+	// 比较项				命令模式Command										备忘录模式
+	// 核心关注点			封装"行为" / "操作"									保存和恢复状态
+	// 保存的内容			执行逻辑 + 可能恢复的信息(旧状态)						对象的完整内部状态
+	// 是否关系状态细节		通常只保存必要的旧值以支持撤销							保存完整状态, 不关系执行过程
+	// 撤销方式				通过反向执行(利用保存的旧值)							通过恢复状态快照
+	// UE 示例				FUICommandList, 蓝图任务节点, Ability					调用 UObject::Modify() USaveGame, 事务快照
+	// 关系					可结合适用:命令中调用备忘录的保存状态					备忘录可以作为命令撤销的底层实现机制
+
+
+	// 观察者模式
+	Subject bossEvent;
+
+	auto ui = std::make_shared<PlayerUI>();
+	auto audio = std::make_shared<AudioSystem>();
+
+	bossEvent.AddObserver(ui);
+	bossEvent.AddObserver(audio);
+
+	bossEvent.Notify("Boss Appeared");
+
+	bossEvent.RemoveObserver(ui);
+	bossEvent.Notify("Boss is Attacking");
+
+
+
+
+
+
 
 	return 0;
 }

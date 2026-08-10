@@ -80,5 +80,11 @@
     <ClInclude Include="Mediator.h">
       <Filter>头文件</Filter>
     </ClInclude>
+    <ClInclude Include="Memento.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="Observer.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

@@ -143,6 +143,8 @@
     <ClInclude Include="Interpreter.h" />
     <ClInclude Include="Iterator.h" />
     <ClInclude Include="Mediator.h" />
+    <ClInclude Include="Memento.h" />
+    <ClInclude Include="Observer.h" />
     <ClInclude Include="Prototype.h" />
     <ClInclude Include="Proxy.h" />
     <ClInclude Include="Singleton.h" />
