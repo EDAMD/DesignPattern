@@ -15,6 +15,9 @@
 #include "Mediator.h"
 #include "Memento.h"
 #include "Observer.h"
+#include "State.h"
+#include "Strategy.h"
+#include "TemplateMode.h"
 
 int main()
 {
@@ -220,7 +223,7 @@ int main()
 	// 关系					可结合适用:命令中调用备忘录的保存状态					备忘录可以作为命令撤销的底层实现机制
 
 
-	// 观察者模式
+	// 观察者模式 
 	Subject bossEvent;
 
 	auto ui = std::make_shared<PlayerUI>();
@@ -235,8 +238,36 @@ int main()
 	bossEvent.Notify("Boss is Attacking");
 
 
+	// 状态模式
+	CharacterState PlayerState;
+
+	PlayerState.SetState(make_shared<StateIdle>());
+	PlayerState.Update();
+
+	PlayerState.SetState(make_shared<StateRun>());
+	PlayerState.Update();
 
 
+	// 策略模式
+	PaymentContext Paycontext;
+
+	Paycontext.SetStrategy(make_shared<PayByCreditCard>());
+	Paycontext.Checkout(100);
+
+	Paycontext.SetStrategy(make_shared<PayByPayPal>());
+	Paycontext.Checkout(200);
+
+
+
+	// 模板模式
+	GameModeBase* game1 = new ShooterGame();
+	game1->StartGame();
+	cout << "-------------------------------------" << endl;
+	GameModeBase* game2 = new RacingGame();
+	game2->StartGame();
+
+	delete game1;
+	delete game2;
 
 
 
