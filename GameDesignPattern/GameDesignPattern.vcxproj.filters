@@ -95,5 +95,11 @@
     <ClInclude Include="TemplateMode.h">
       <Filter>头文件</Filter>
     </ClInclude>
+    <ClInclude Include="Visitor.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="ObjectPool.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

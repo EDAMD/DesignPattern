@@ -18,6 +18,8 @@
 #include "State.h"
 #include "Strategy.h"
 #include "TemplateMode.h"
+#include "Visitor.h"
+#include "ObjectPool.h"
 
 int main()
 {
@@ -270,6 +272,47 @@ int main()
 	delete game2;
 
 
+	// 访问者模式
+	vector<shared_ptr<ICharacter>> characters;
+	characters.push_back(make_shared<OwnerWarrior>());
+	characters.push_back(make_shared<Mage>());
+
+	RenderVisitor render;
+	AIVisitor ai;
+
+
+	cout << "-------------------- Render Phase --------------------" << endl;
+	for (auto& character : characters)
+	{
+		character->Accept(render);
+	}
+	cout << "-------------------- AI Phase --------------------" << endl;
+	for (auto& character : characters)
+	{
+		character->Accept(ai);
+	}
+
+
+	// 对象池模式
+	ObjectPool<Bullet> bulletPool(3);
+	Bullet* b1 = bulletPool.AcquireObject();
+	b1->fire(1, 1);
+
+	Bullet* b2 = bulletPool.AcquireObject();
+	b1->fire(2, 2);
+
+	Bullet* b3 = bulletPool.AcquireObject();
+	b1->fire(3, 3);
+
+	Bullet* b4 = bulletPool.AcquireObject();
+	b1->fire(4, 4);
+
+	b1->Update();
+	b2->Update();
+	b3->Update();
+	b4->Update();
+
+	bulletPool.ResetAll();
 
 	return 0;
 }
