@@ -2,5 +2,8 @@
 Debug/
 Release/
 x64/
+GameDesignPattern/simple_library/
+VSGenerator.exe
+skills.json
 *.obj
 *.pdb

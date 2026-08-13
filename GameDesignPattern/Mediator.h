@@ -51,7 +51,7 @@ class Player : public Colleague
 public:
 	Player(const std::string& name, Mediator& mediator) : Colleague(mediator), name(name) {}
 
-	void SendMessage(const std::string& msg)
+	void Sendmsg(const std::string& msg)
 	{
 		mediator.Send(msg, this);
 	}

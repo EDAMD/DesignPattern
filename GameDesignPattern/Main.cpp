@@ -1,3 +1,4 @@
+#include "simple_library/public/simple_library.h"
 #include "Singleton.h"
 #include "Factory.h"
 #include "BuilderPattern.h"
@@ -20,6 +21,9 @@
 #include "TemplateMode.h"
 #include "Visitor.h"
 #include "ObjectPool.h"
+#include "ServiceLocator.h"
+#include "Component.h"
+#include "DataDriven.h"
 
 int main()
 {
@@ -188,8 +192,8 @@ int main()
 	mediator.AddColleague(&p2);
 	mediator.AddColleague(&p3);
 
-	p1.SendMessage("Hello everyone !");
-	p2.SendMessage("Hi Alice !");
+	p1.Sendmsg("Hello everyone !");
+	p2.Sendmsg("Hi Alice !");
 
 
 	// 备忘录模式
@@ -313,6 +317,35 @@ int main()
 	b4->Update();
 
 	bulletPool.ResetAll();
+
+
+	// 服务定位模式
+	ServiceLocator::GetAudio()->PlaySound("gunshot");
+	ServiceLocator::Provide(std::make_shared<SDLAudioServide>());
+	ServiceLocator::GetAudio()->PlaySound("explosion");
+
+
+	// 组件模式
+	Entity Actor;
+	auto* comp = Actor.AddComponent<MovementComponent>();
+	comp->SetSpeed(10.f);
+
+	Actor.AddComponent<RenderComponent>();
+
+	for (int i = 0; i < 3; i++)
+	{
+		cout << "---------------" << "Frame: " << i << "---------------" << endl;
+		Actor.Update(0.016f);
+	}
+
+
+	// 数据驱动模式
+	SkillSystem skillSystem;
+	skillSystem.Load("skills.json");
+
+	skillSystem.UseSkill(0);
+	skillSystem.UseSkill(1);
+
 
 	return 0;
 }
