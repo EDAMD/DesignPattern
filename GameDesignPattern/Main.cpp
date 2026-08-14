@@ -24,6 +24,8 @@
 #include "ServiceLocator.h"
 #include "Component.h"
 #include "DataDriven.h"
+#include "Blackboard.h"
+#include "DoubleBuffer.h"
 
 int main()
 {
@@ -345,6 +347,49 @@ int main()
 
 	skillSystem.UseSkill(0);
 	skillSystem.UseSkill(1);
+
+
+	// 黑板模式
+	std::shared_ptr<Blackboard> bb = make_shared<Blackboard>();
+
+	PerceptionSystem perception(bb);
+	AttackSystem attack(bb);
+
+	perception.Tick();
+	attack.Tick();
+
+
+	// 双重缓冲区
+	DoubleBuffer<int> db;
+
+	std::thread write([&]()
+	{
+		for (int i = 0; i < 5; i++)
+		{
+			db.Write(i);
+			std::this_thread::sleep_for(std::chrono::milliseconds(50));
+		}
+	});
+	
+	std::thread read([&]()
+	{
+		for (int f = 0; f < 5; f++)
+		{
+			db.Swap();
+			auto data = db.Read();
+			cout << "[Frame: " << f << "] Read buffer: ";
+			for (auto& d : data) cout << d << " " << endl;
+			cout << endl;
+			std::this_thread::sleep_for(std::chrono::milliseconds(100));
+		}
+	});
+
+	write.join();
+	read.join();
+
+
+
+
 
 
 	return 0;

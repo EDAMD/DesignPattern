@@ -180,6 +180,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Adapter.h" />
+    <ClInclude Include="Blackboard.h" />
     <ClInclude Include="Bridge.h" />
     <ClInclude Include="BuilderPattern.h" />
     <ClInclude Include="ChainOfResponsibility.h" />
@@ -188,6 +189,7 @@
     <ClInclude Include="Composite.h" />
     <ClInclude Include="DataDriven.h" />
     <ClInclude Include="Decorator.h" />
+    <ClInclude Include="DoubleBuffer.h" />
     <ClInclude Include="Facade.h" />
     <ClInclude Include="Factory.h" />
     <ClInclude Include="Flyweight.h" />
