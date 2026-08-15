@@ -566,5 +566,9 @@
     <ClInclude Include="Visitor.h" />
     <ClInclude Include="Blackboard.h" />
     <ClInclude Include="DoubleBuffer.h" />
+    <ClInclude Include="GameLoop.h" />
+    <ClInclude Include="LockStep.h" />
+    <ClInclude Include="EventQueue.h" />
+    <ClInclude Include="ServiceProvider.h" />
   </ItemGroup>
 </Project>

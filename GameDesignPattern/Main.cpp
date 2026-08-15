@@ -26,6 +26,10 @@
 #include "DataDriven.h"
 #include "Blackboard.h"
 #include "DoubleBuffer.h"
+#include "GameLoop.h"
+#include "LockStep.h"
+#include "EventQueue.h"
+#include "ServiceProvider.h"
 
 int main()
 {
@@ -388,8 +392,128 @@ int main()
 	read.join();
 
 
+	
+	// 游戏循环模式
+	Game game;
+
+	bool isRunning = true;
+	const float targetFrameTime = 1.f / 60.f;
+	auto lastTime = std::chrono::high_resolution_clock::now();
+
+	while (isRunning)
+	{
+		auto currentTime = std::chrono::high_resolution_clock::now();
+		std::chrono::duration<float> elapsed = currentTime - lastTime;
+		float deltaTime = elapsed.count();
+		lastTime = currentTime;
+
+		game.ProcessInput();
+
+		game.Update(deltaTime);
+
+		game.Render();
+
+		static int frameCount = 0;
+		if (++frameCount > 3)
+		{
+			isRunning = false;
+		}
+
+		// 固定帧率
+		auto frameEnd = std::chrono::high_resolution_clock::now();
+		std::chrono::duration<float> frameDuration = frameEnd - currentTime;
+		if (frameDuration.count() < targetFrameTime)
+		{
+			std::this_thread::sleep_for(
+				std::chrono::duration<float>(targetFrameTime - frameDuration.count())
+			);
+		}
+
+	}
 
 
+	// 帧同步
+	GameState gameState;
+	const int totalFrame = 5;
+	const int players = 2;
+
+	// <每一帧, 对应的动作>
+	std::map<int, std::vector<PlayerCommand>> CommandBuffer;
+
+	for (int frame = 1; frame <= totalFrame; frame++)
+	{
+		// 当前帧所有动作
+		std::vector<PlayerCommand> currentFrameCommands;
+
+		// 模拟网络操作中已经收集到每个晚间当前帧的输入
+		for (int p = 0; p < players; p++)
+		{
+			PlayerCommand cmd{ p, "Move_" + std::to_string(frame) };
+			currentFrameCommands.push_back(cmd);
+		}
+
+
+		CommandBuffer[frame] = currentFrameCommands;
+
+		gameState.frameNumber = frame;
+		gameState.ApplyCommand(CommandBuffer[frame]);
+		gameState.PrintState();
+
+		std::this_thread::sleep_for(std::chrono::milliseconds(50));
+	}
+
+
+	// 事件队列
+	EventQueue eq;
+
+	std::thread producer([&]()
+		{
+		for (int i = 0; i < 5; i++)
+		{
+			eq.Push({ i, "Data" + std::to_string(i) });
+			std::cout << "[Producer] Event " << i << "pushed" << std::endl;
+
+			std::this_thread::sleep_for(std::chrono::milliseconds(100));
+		}
+	});
+
+	std::thread consumer([&]()
+	{
+		for (int i = 0; i < 5; i++)
+		{
+			Event e;
+			while (!eq.Pop(e))
+			{
+				std::this_thread::sleep_for(std::chrono::milliseconds(10));
+			}
+
+			cout << "[Consumer] Handling event_" << e.id << " --> " << e.payload << std::endl;
+		};
+	});
+
+
+	producer.join();
+	consumer.join();
+
+
+	// 服务提供者模式
+	ServiceProvider provider;
+
+	provider.Register<ILogger>("Console", []()
+	{
+		return std::make_shared<ConsoleLogger>();
+	});
+
+	provider.Register<ILogger>("File", []()
+	{
+		return std::make_shared<FileLogger>();
+	});
+
+	auto logger1 = provider.Get<ConsoleLogger>("Console");
+	logger1->Log("Log from ConsoleLogger");
+
+	auto logger1 = provider.Get<FileLogger>("Console");
+	logger1->Log("Log from FileLogger");
 
 
 	return 0;

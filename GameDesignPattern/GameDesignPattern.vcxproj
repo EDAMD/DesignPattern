@@ -190,11 +190,14 @@
     <ClInclude Include="DataDriven.h" />
     <ClInclude Include="Decorator.h" />
     <ClInclude Include="DoubleBuffer.h" />
+    <ClInclude Include="EventQueue.h" />
     <ClInclude Include="Facade.h" />
     <ClInclude Include="Factory.h" />
     <ClInclude Include="Flyweight.h" />
+    <ClInclude Include="GameLoop.h" />
     <ClInclude Include="Interpreter.h" />
     <ClInclude Include="Iterator.h" />
+    <ClInclude Include="LockStep.h" />
     <ClInclude Include="Mediator.h" />
     <ClInclude Include="Memento.h" />
     <ClInclude Include="ObjectPool.h" />
@@ -202,6 +205,7 @@
     <ClInclude Include="Prototype.h" />
     <ClInclude Include="Proxy.h" />
     <ClInclude Include="ServiceLocator.h" />
+    <ClInclude Include="ServiceProvider.h" />
     <ClInclude Include="simple_library\private\simple_channel\simple_net_connetion\simple_connetion_tcp.h" />
     <ClInclude Include="simple_library\private\simple_channel\simple_net_connetion\simple_connetion_udp.h" />
     <ClInclude Include="simple_library\private\simple_channel\simple_net_drive\simple_net_drive_tcp.h" />
