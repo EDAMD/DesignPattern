@@ -509,11 +509,11 @@ int main()
 		return std::make_shared<FileLogger>();
 	});
 
-	auto logger1 = provider.Get<ConsoleLogger>("Console");
+	auto logger1 = provider.Get<ILogger>("Console");
 	logger1->Log("Log from ConsoleLogger");
 
-	auto logger1 = provider.Get<FileLogger>("Console");
-	logger1->Log("Log from FileLogger");
+	auto logger2 = provider.Get<ILogger>("File");
+	logger2->Log("Log from FileLogger");
 
 
 	return 0;

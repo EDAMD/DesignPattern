@@ -61,10 +61,10 @@ public:
 	template<typename T>
 	void Register(const std::string& name, std::function<std::shared_ptr<T>()> creater)
 	{
-		creaters[name] = creater()
+		creaters[name] = [creater]()
 		{
 			return std::static_pointer_cast<void>(creater());
-		}
+		};
 	}
 
 	template<typename T>
@@ -80,5 +80,5 @@ public:
 
 
 private:
-	std::unordered_map<std::string, std::function<std::shared_ptr<void>>> creaters;
+	std::unordered_map<std::string, std::function<std::shared_ptr<void>()>> creaters;
 };
