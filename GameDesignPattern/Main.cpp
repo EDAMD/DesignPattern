@@ -30,6 +30,11 @@
 #include "LockStep.h"
 #include "EventQueue.h"
 #include "ServiceProvider.h"
+#include "MVC.h"
+#include "MVP.h"
+#include "ECS.h"
+#include "FSM.h"
+#include "HFSM.h"
 
 int main()
 {
@@ -514,6 +519,108 @@ int main()
 
 	auto logger2 = provider.Get<ILogger>("File");
 	logger2->Log("Log from FileLogger");
+
+
+	// 并发与多线程设计模式
+
+
+
+
+
+
+	// End
+
+
+
+	// MVC 设计模式
+	if (false)
+	{
+		CounterModel model;
+		CounterView view;
+		CounterController controller(model, view);
+
+		view.Show(model.GetValue());
+
+		string  cmd;
+
+		while (true)
+		{
+			std::cout << "Command (inc/set/quit): " << std::endl;
+			cin >> cmd;
+
+			if (cmd == "quit")
+			{
+				break;
+			}
+
+			controller.OnUserInput(cmd);
+
+		}
+	}
+
+
+	// MVP
+	if (false)
+	{
+		UserModel _model;
+
+		ConsoleLoginView _view(nullptr);
+		LoginPresenter _presenter(_view, _model);
+		_view = ConsoleLoginView(&_presenter);
+
+		ConsoleLoginView realView(&_presenter);
+		realView.Show();
+	}
+
+
+
+
+
+	// ECS 
+	ECS::ComponentManager cm;
+	ECS::Entity e1 = 1;
+	ECS::Entity e2 = 2;
+
+	cm.addPosition(e1, 0, 0);
+	cm.addVelocity(e1, 1, 1);
+
+	cm.addPosition(e2, 10, 10);
+	cm.addVelocity(e2, -1, 0);
+
+	ECS::MovementSystem movementSysytem;
+	
+	movementSysytem.Update(cm, 1.f);
+	movementSysytem.Update(cm, 1.f);
+
+
+
+	// FSM
+
+	FSM::FSM fsm;
+	auto idle = std::make_shared<FSM::IdleState>();
+	auto walking = std::make_shared<FSM::WalkingState>();
+
+	fsm.changeState(idle);
+	fsm.Update();
+
+	fsm.changeState(walking);
+	fsm.Update();
+
+	fsm.changeState(idle);
+	fsm.Update();
+
+
+	// HFSM
+	auto parent = std::make_shared<HFSM::ParentState>();
+	auto child = std::make_shared<HFSM::ChildState>();
+
+	parent->addChild(child);
+
+	parent->enter();
+	parent->execute();
+	parent->exit();
+
+
 
 
 	return 0;

@@ -570,5 +570,10 @@
     <ClInclude Include="LockStep.h" />
     <ClInclude Include="EventQueue.h" />
     <ClInclude Include="ServiceProvider.h" />
+    <ClInclude Include="MVC.h" />
+    <ClInclude Include="MVP.h" />
+    <ClInclude Include="ECS.h" />
+    <ClInclude Include="FSM.h" />
+    <ClInclude Include="HFSM.h" />
   </ItemGroup>
 </Project>
