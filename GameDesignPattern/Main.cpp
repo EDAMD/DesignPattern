@@ -35,6 +35,7 @@
 #include "ECS.h"
 #include "FSM.h"
 #include "HFSM.h"
+#include "BehaviorTree.h"
 
 int main()
 {
@@ -620,7 +621,19 @@ int main()
 	parent->execute();
 	parent->exit();
 
+	
+	// ÐÐÎªÊ÷
+	auto rootNode = std::make_shared<SelectorNode>();
 
+	auto seq = std::make_shared<SequeueceNode>();
+	seq->AddChild(std::make_shared<ActionNode>("¼ì²éµÐÈË", false));
+	seq->AddChild(std::make_shared<ActionNode>("¹¥»÷", true));
+
+	auto patrol = std::make_shared<ActionNode>("Ñ²Âß", true);
+	rootNode->AddChild(seq);
+	rootNode->AddChild(patrol);
+
+	rootNode->Tick();
 
 
 	return 0;

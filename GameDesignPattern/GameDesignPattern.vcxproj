@@ -180,6 +180,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Adapter.h" />
+    <ClInclude Include="BehaviorTree.h" />
     <ClInclude Include="Blackboard.h" />
     <ClInclude Include="Bridge.h" />
     <ClInclude Include="BuilderPattern.h" />

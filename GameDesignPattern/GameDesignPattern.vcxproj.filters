@@ -575,5 +575,6 @@
     <ClInclude Include="ECS.h" />
     <ClInclude Include="FSM.h" />
     <ClInclude Include="HFSM.h" />
+    <ClInclude Include="BehaviorTree.h" />
   </ItemGroup>
 </Project>
